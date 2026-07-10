@@ -55,7 +55,11 @@ let modeTambah = false;
 let markerNasabah = [];
 
 function tambahNasabah() {
-    alert("Tombol berhasil ditekan");
+
+    modeTambah = true;
+
+    alert("Silakan ketuk lokasi nasabah pada peta.");
+
 }
 
 map.on("click", function(e){
@@ -64,7 +68,12 @@ map.on("click", function(e){
 
     lokasiDipilih = e.latlng;
 
-    alert("Lokasi berhasil dipilih.\nSekarang isi data nasabah lalu tekan Simpan.");
+    L.marker(lokasiDipilih)
+        .addTo(map)
+        .bindPopup("Lokasi Nasabah")
+        .openPopup();
+
+    alert("Lokasi berhasil dipilih.");
 
     modeTambah = false;
 
