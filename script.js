@@ -1,3 +1,4 @@
+let lokasiDipilih = null;
 
 // Membuat peta
 var map = L.map('map').setView([-6.2, 106.8], 5);
@@ -61,33 +62,11 @@ map.on("click", function(e){
 
     if(!modeTambah) return;
 
-    let nama = prompt("Masukkan Nama Nasabah");
+    lokasiDipilih = e.latlng;
 
-    if(nama==null || nama==""){
-        modeTambah=false;
-        return;
-    }
+    alert("Lokasi berhasil dipilih.\nSekarang isi data nasabah lalu tekan Simpan.");
 
-    let marker = L.marker([e.latlng.lat,e.latlng.lng]).addTo(map);
-
-    marker.bindPopup(
-        "<b>"+nama+"</b><br>Nasabah"
-    );
-
-    markerNasabah.push({
-        nama:nama,
-        lat:e.latlng.lat,
-        lng:e.latlng.lng
-    });
-
-    localStorage.setItem(
-        "nasabah",
-        JSON.stringify(markerNasabah)
-    );
-
-    modeTambah=false;
-
-    alert("Nasabah berhasil ditambahkan.");
+    modeTambah = false;
 
 });
 
@@ -102,3 +81,49 @@ data.forEach(function(item){
     markerNasabah.push(item);
 
 });
+
+function simpanNasabah(){
+
+    if(lokasiDipilih==null){
+        alert("Pilih lokasi di peta terlebih dahulu.");
+        return;
+    }
+
+    let nama=document.getElementById("namaNasabah").value;
+    let alamat=document.getElementById("alamatNasabah").value;
+    let hp=document.getElementById("hpNasabah").value;
+
+    if(nama==""){
+        alert("Nama nasabah harus diisi.");
+        return;
+    }
+
+    let data={
+        nama:nama,
+        alamat:alamat,
+        hp:hp,
+        lat:lokasiDipilih.lat,
+        lng:lokasiDipilih.lng
+    };
+
+    markerNasabah.push(data);
+
+    localStorage.setItem(
+        "nasabah",
+        JSON.stringify(markerNasabah)
+    );
+
+    L.marker([data.lat,data.lng])
+    .addTo(map)
+    .bindPopup(
+        "<b>"+data.nama+"</b><br>"+data.alamat+"<br>"+data.hp
+    );
+
+    document.getElementById("namaNasabah").value="";
+    document.getElementById("alamatNasabah").value="";
+    document.getElementById("hpNasabah").value="";
+
+    lokasiDipilih=null;
+
+    alert("Nasabah berhasil disimpan.");
+}
