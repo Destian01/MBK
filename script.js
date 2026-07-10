@@ -48,3 +48,60 @@ function ambilLokasi(){
     });
 
 }
+
+let modeTambah = false;
+let markerNasabah = [];
+
+function modeTambahNasabah(){
+
+    alert("Tekan lokasi di peta untuk menambahkan nasabah.");
+
+    modeTambah = true;
+
+}
+
+map.on("click", function(e){
+
+    if(!modeTambah) return;
+
+    let nama = prompt("Masukkan Nama Nasabah");
+
+    if(nama==null || nama==""){
+        modeTambah=false;
+        return;
+    }
+
+    let marker = L.marker([e.latlng.lat,e.latlng.lng]).addTo(map);
+
+    marker.bindPopup(
+        "<b>"+nama+"</b><br>Nasabah"
+    );
+
+    markerNasabah.push({
+        nama:nama,
+        lat:e.latlng.lat,
+        lng:e.latlng.lng
+    });
+
+    localStorage.setItem(
+        "nasabah",
+        JSON.stringify(markerNasabah)
+    );
+
+    modeTambah=false;
+
+    alert("Nasabah berhasil ditambahkan.");
+
+});
+
+let data = JSON.parse(localStorage.getItem("nasabah")) || [];
+
+data.forEach(function(item){
+
+    L.marker([item.lat,item.lng])
+        .addTo(map)
+        .bindPopup("<b>"+item.nama+"</b><br>Nasabah");
+
+    markerNasabah.push(item);
+
+});
