@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Kunjungan Nasabah</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h2>📍 Aplikasi Kunjungan Nasabah</h2>
+    </header>
+
+    <div class="container">
+
+        <div class="card">
+            <h3>Informasi Petugas</h3>
+
+            <p><b>Nama Petugas</b></p>
+            <input type="text" id="petugas" placeholder="Masukkan nama petugas">
+
+            <button onclick="ambilLokasi()">
+                Ambil Lokasi Saya
+            </button>
+
+            <p id="status">Lokasi belum diambil.</p>
+
+            <p><b>Latitude</b></p>
+            <input type="text" id="lat" readonly>
+
+            <p><b>Longitude</b></p>
+            <input type="text" id="lng" readonly>
+
+        </div>
+
+        <div id="map"></div>
+
+    </div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
