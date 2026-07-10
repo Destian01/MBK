@@ -52,12 +52,8 @@ function ambilLokasi(){
 let modeTambah = false;
 let markerNasabah = [];
 
-function modeTambahNasabah(){
-
-    alert("Tekan lokasi di peta untuk menambahkan nasabah.");
-
-    modeTambah = true;
-
+function tambahNasabah() {
+    alert("Tombol berhasil ditekan");
 }
 
 map.on("click", function(e){
