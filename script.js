@@ -1,3 +1,4 @@
+
 // Membuat peta
 var map = L.map('map').setView([-6.2, 106.8], 5);
 
