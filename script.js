@@ -85,7 +85,11 @@ data.forEach(function(item){
 
     L.marker([item.lat,item.lng])
         .addTo(map)
-        .bindPopup("<b>"+item.nama+"</b><br>Nasabah");
+        .bindPopup(`
+            <b>${item.nama}</b><br>
+            📍 ${item.alamat}<br>
+            📞 ${item.hp}
+        `);
 
     markerNasabah.push(item);
 
