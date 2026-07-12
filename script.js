@@ -154,7 +154,6 @@ function simpanNasabah(){
 function tampilkanNasabah(){
 
     let daftar = document.getElementById("daftarNasabah");
-
     daftar.innerHTML = "";
 
     markerNasabah.forEach(function(item,index){
@@ -168,17 +167,13 @@ function tampilkanNasabah(){
 
             <p>📞 ${item.hp}</p>
 
-            <button onclick="lihatLokasi(${index})">
-                📍 Lihat Lokasi
-            </button>
+            <button onclick="lihatLokasi(${index})">📍 Lihat Lokasi</button>
 
-            <button onclick="editNasabah(${index})">
-                ✏ Edit
-            </button>
+            <button onclick="navigasiKeNasabah(${index})">🧭 Navigasi</button>
 
-            <button onclick="hapusNasabah(${index})">
-                🗑 Hapus
-            </button>
+            <button onclick="editNasabah(${index})">✏️ Edit</button>
+
+            <button onclick="hapusNasabah(${index})">🗑️ Hapus</button>
 
         </div>
         <hr>
@@ -256,4 +251,15 @@ function hapusNasabah(index){
 
     tampilkanNasabah();
 
+}
+
+function navigasiKeNasabah(index){
+    let data = JSON.parse(localStorage.getItem("nasabah")) || [];
+    let n = data[index];
+
+    window.open(
+        "https://www.google.com/maps/dir/?api=1&destination=" +
+        n.lat + "," + n.lng,
+        "_blank"
+    );
 }
