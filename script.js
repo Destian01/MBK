@@ -23,24 +23,31 @@ function ambilLokasi(){
 
         let lat = pos.coords.latitude;
         let lng = pos.coords.longitude;
+        let akurasi = Math.round(pos.coords.accuracy);
 
         document.getElementById("lat").value = lat;
         document.getElementById("lng").value = lng;
+        document.getElementById("akurasi").value = akurasi + " Meter";
 
-        document.getElementById("status").innerHTML="✅ Lokasi berhasil diambil.";
+        // Lokasi yang akan dipakai saat menyimpan nasabah
+        lokasiDipilih = {
+            lat: lat,
+            lng: lng
+        };
 
-        map.setView([lat,lng],17);
+        map.setView([lat,lng],18);
 
         if(markerPetugas){
             map.removeLayer(markerPetugas);
         }
 
-        let nama = document.getElementById("petugas").value || "Petugas";
-
         markerPetugas = L.marker([lat,lng])
             .addTo(map)
-            .bindPopup("<b>"+nama+"</b><br>Lokasi Petugas")
+            .bindPopup("<b>Lokasi Petugas</b>")
             .openPopup();
+
+        document.getElementById("status").innerHTML =
+            "🟢 GPS berhasil diambil";
 
     },function(err){
 
@@ -101,8 +108,8 @@ tampilkanNasabah();
 function simpanNasabah(){
 
     if(lokasiDipilih==null){
-        alert("Pilih lokasi di peta terlebih dahulu.");
-        return;
+    alert("Silakan tekan 'Ambil Lokasi Saya' terlebih dahulu.");
+    return;
     }
 
     let nama=document.getElementById("namaNasabah").value;
