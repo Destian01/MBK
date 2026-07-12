@@ -1,4 +1,5 @@
 let lokasiDipilih = null;
+let editIndex = -1;
 
 // Membuat peta
 var map = L.map('map').setView([-6.2, 106.8], 5);
@@ -92,8 +93,10 @@ data.forEach(function(item){
         `);
 
     markerNasabah.push(item);
-
+tampilkanNasabah();
 });
+
+tampilkanNasabah();
 
 function simpanNasabah(){
 
@@ -119,7 +122,12 @@ function simpanNasabah(){
         lng:lokasiDipilih.lng
     };
 
+    if(editIndex == -1){
     markerNasabah.push(data);
+}else{
+    markerNasabah[editIndex] = data;
+    editIndex = -1;
+    }
 
     localStorage.setItem(
         "nasabah",
@@ -139,4 +147,113 @@ function simpanNasabah(){
     lokasiDipilih=null;
 
     alert("Nasabah berhasil disimpan.");
+
+  tampilkanNasabah();
+}
+
+function tampilkanNasabah(){
+
+    let daftar = document.getElementById("daftarNasabah");
+
+    daftar.innerHTML = "";
+
+    markerNasabah.forEach(function(item,index){
+
+        daftar.innerHTML += `
+        <div class="itemNasabah">
+
+            <h3>👤 ${item.nama}</h3>
+
+            <p>📍 ${item.alamat}</p>
+
+            <p>📞 ${item.hp}</p>
+
+            <button onclick="lihatLokasi(${index})">
+                📍 Lihat Lokasi
+            </button>
+
+            <button onclick="editNasabah(${index})">
+                ✏ Edit
+            </button>
+
+            <button onclick="hapusNasabah(${index})">
+                🗑 Hapus
+            </button>
+
+        </div>
+        <hr>
+        `;
+
+    });
+
+}
+
+function lihatLokasi(index){
+
+    let item = markerNasabah[index];
+
+    map.setView([item.lat,item.lng],18);
+
+    L.popup()
+      .setLatLng([item.lat,item.lng])
+      .setContent(`
+        <b>${item.nama}</b><br>
+        ${item.alamat}<br>
+        ${item.hp}
+      `)
+      .openOn(map);
+
+}
+
+function editNasabah(index){
+
+    let data = markerNasabah[index];
+
+    document.getElementById("namaNasabah").value = data.nama;
+    document.getElementById("alamatNasabah").value = data.alamat;
+    document.getElementById("hpNasabah").value = data.hp;
+
+    lokasiDipilih = {
+        lat: data.lat,
+        lng: data.lng
+    };
+
+    editIndex = index;
+
+    alert("Silakan ubah data lalu tekan Simpan Nasabah.");
+}
+
+function hapusNasabah(index){
+
+    if(!confirm("Yakin ingin menghapus nasabah ini?")){
+        return;
+    }
+
+    markerNasabah.splice(index,1);
+
+    localStorage.setItem(
+        "nasabah",
+        JSON.stringify(markerNasabah)
+    );
+
+    map.eachLayer(function(layer){
+        if(layer instanceof L.Marker && layer !== markerPetugas){
+            map.removeLayer(layer);
+        }
+    });
+
+    markerNasabah.forEach(function(item){
+
+        L.marker([item.lat,item.lng])
+        .addTo(map)
+        .bindPopup(`
+            <b>${item.nama}</b><br>
+            ${item.alamat}<br>
+            ${item.hp}
+        `);
+
+    });
+
+    tampilkanNasabah();
+
 }
