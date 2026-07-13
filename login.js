@@ -28,6 +28,6 @@ localStorage.setItem("login","true");
 localStorage.setItem("namaPetugas",akun.nama);
 localStorage.setItem("role",akun.role);
 
-location.href="index_v2.html";
+location.href="index.html";
 
 }
