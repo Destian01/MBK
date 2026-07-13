@@ -1,3 +1,9 @@
+if(localStorage.getItem("login")!="true"){
+
+    window.location.href="login.html";
+
+}
+
 let lokasiDipilih = null;
 let editIndex = -1;
 
@@ -113,7 +119,7 @@ function simpanNasabah(){
     let nama=document.getElementById("namaNasabah").value;
     let alamat=document.getElementById("alamatNasabah").value;
     let hp=document.getElementById("hpNasabah").value;
-  let petugas = document.getElementById("petugas").value;
+  let petugas = localStorage.getItem("namaPetugas");
 let status =
 document.getElementById("statusNasabah").value;
 
@@ -379,5 +385,27 @@ function statusBadge(status){
 
 }
 
+function logout(){
+
+    if(confirm("Yakin ingin keluar?")){
+
+        localStorage.removeItem("login");
+        localStorage.removeItem("namaPetugas");
+
+        window.location.href="login.html";
+
+    }
+
+}
+
+function tampilkanPetugas(){
+
+    let nama = localStorage.getItem("namaPetugas");
+
+    document.getElementById("namaPetugas").innerHTML = nama;
+
+}
+
 tampilkanNasabah();
 updateLaporan();
+tampilkanPetugas();
