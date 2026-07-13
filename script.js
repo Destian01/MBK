@@ -103,8 +103,6 @@ data.forEach(function(item){
 tampilkanNasabah();
 });
 
-tampilkanNasabah();
-
 function simpanNasabah(){
 
     if(lokasiDipilih==null){
@@ -115,6 +113,7 @@ function simpanNasabah(){
     let nama=document.getElementById("namaNasabah").value;
     let alamat=document.getElementById("alamatNasabah").value;
     let hp=document.getElementById("hpNasabah").value;
+ let petugas = document.getElementById("petugas").value; 
 
     if(nama==""){
         alert("Nama nasabah harus diisi.");
@@ -122,12 +121,13 @@ function simpanNasabah(){
     }
 
     let data={
-        nama:nama,
-        alamat:alamat,
-        hp:hp,
-        lat:lokasiDipilih.lat,
-        lng:lokasiDipilih.lng
-    };
+    nama:nama,
+    alamat:alamat,
+    hp:hp,
+    petugas:petugas,
+    lat:lokasiDipilih.lat,
+    lng:lokasiDipilih.lng
+};
 
     if(editIndex == -1){
     markerNasabah.push(data);
@@ -156,6 +156,7 @@ function simpanNasabah(){
     alert("Nasabah berhasil disimpan.");
 
   tampilkanNasabah();
+  updateLaporan();
 }
 
 function tampilkanNasabah(){
@@ -173,6 +174,7 @@ function tampilkanNasabah(){
             <p>📍 ${item.alamat}</p>
 
             <p>📞 ${item.hp}</p>
+<p>👮 Petugas : ${item.petugas}</p>
 
             <button onclick="lihatLokasi(${index})">📍 Lihat Lokasi</button>
 
@@ -257,6 +259,7 @@ function hapusNasabah(index){
     });
 
     tampilkanNasabah();
+updateLaporan();
 
 }
 
@@ -270,3 +273,34 @@ function navigasiKeNasabah(index){
         "_blank"
     );
 }
+
+function bukaMenu(menu){
+
+    console.log(menu);
+
+    const pages = document.querySelectorAll(".page");
+
+    pages.forEach(function(page){
+        page.style.display = "none";
+    });
+
+    document.getElementById(menu + "Page").style.display = "block";
+
+    if(menu=="home"){
+        setTimeout(function(){
+            map.invalidateSize();
+        },200);
+    }
+
+}
+
+function updateLaporan(){
+
+    let data = JSON.parse(localStorage.getItem("nasabah")) || [];
+
+    document.getElementById("totalNasabah").innerText = data.length;
+
+}
+
+tampilkanNasabah();
+updateLaporan();
