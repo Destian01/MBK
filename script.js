@@ -176,14 +176,17 @@ function tampilkanNasabah(){
             <p>📞 ${item.hp}</p>
 <p>👮 Petugas : ${item.petugas}</p>
 
-            <button onclick="lihatLokasi(${index})">📍 Lihat Lokasi</button>
+            <div class="aksi">
 
-            <button onclick="navigasiKeNasabah(${index})">🧭 Navigasi</button>
+<button onclick="lihatLokasi(${index})">📍</button>
 
-            <button onclick="editNasabah(${index})">✏️ Edit</button>
+<button onclick="navigasiKeNasabah(${index})">🧭</button>
 
-            <button onclick="hapusNasabah(${index})">🗑️ Hapus</button>
+<button onclick="editNasabah(${index})">✏️</button>
 
+<button onclick="hapusNasabah(${index})">🗑️</button>
+
+</div>
         </div>
         <hr>
         `;
