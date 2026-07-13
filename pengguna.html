@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Kunjungan Nasabah</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+  
+  <body>
+<header class="header">
+
+    <h2>👤 Manajemen Pengguna</h2>
+
+    <button onclick="kembaliHome()" class="btnHome">
+        🏠 Kembali ke Home
+    </button>
+
+</header>
+
+<div class="page">
+
+    <div class="card">
+
+        <input type="text"
+        id="nama"
+        placeholder="Nama Lengkap">
+
+        <input type="text"
+        id="username"
+        placeholder="Username">
+
+        <input type="password"
+        id="password"
+        placeholder="Password">
+
+        <select id="role">
+
+            <option value="petugas">Petugas</option>
+
+            <option value="supervisor">Supervisor</option>
+
+            <option value="admin">Admin</option>
+
+        </select>
+
+        <button onclick="simpanPengguna()">
+            💾 Simpan Pengguna
+        </button>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Daftar Pengguna</h3>
+
+        <div id="daftarPengguna"></div>
+
+    </div>
+
+</div>
+    
+    
+<script src="pengguna.js"></script>
+
+</body>
+</html>
