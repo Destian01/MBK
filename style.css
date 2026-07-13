@@ -9,10 +9,10 @@ body{
     color:white;
     padding:6px;
     text-align:center;
-    font-size:10px;
+    font-size:6px;
     font-weight:bold;
-    border-bottom-left-radius:8px;
-    border-bottom-right-radius:8px;
+    border-bottom-left-radius:6px;
+    border-bottom-right-radius:6px;
 }
 
 .page{
@@ -105,4 +105,108 @@ input{
 .aksi button:hover{
     background:#1565C0;
     color:white;
+}
+
+.menuNasabah{
+    position:relative;
+    text-align:right;
+}
+
+.menuBtn{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#1565C0;
+    color:white;
+    font-size:22px;
+}
+
+.popupMenu{
+
+    display:none;
+
+    position:absolute;
+
+    right:0;
+
+    top:50px;
+
+    width:180px;
+
+    background:white;
+
+    border-radius:15px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.25);
+
+    overflow:hidden;
+
+    z-index:999;
+}
+
+.popupMenu button{
+
+    width:100%;
+
+    background:white;
+
+    color:#333;
+
+    text-align:left;
+
+    padding:12px;
+
+    border:none;
+
+}
+
+.popupMenu button:hover{
+
+    background:#E3F2FD;
+
+}
+
+.itemNasabah{
+    position:relative;
+}
+
+.atasNasabah{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.atasNasabah h3{
+    margin:0;
+}
+
+.menuBtn{
+    width:40px;
+    height:40px;
+    border:none;
+    border-radius:50%;
+    background:transparent;
+    color:#555;
+    font-size:24px;
+    cursor:pointer;
+}
+
+select{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:10px;
+
+    margin-bottom:15px;
+
+    border-radius:10px;
+
+    border:1px solid #ccc;
+
+    box-sizing:border-box;
+
+    font-size:15px;
+
 }
