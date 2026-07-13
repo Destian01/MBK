@@ -7,12 +7,12 @@ body{
 .header{
     background:#1565C0;
     color:white;
-    padding:18px;
+    padding:6px;
     text-align:center;
-    font-size:22px;
+    font-size:10px;
     font-weight:bold;
-    border-bottom-left-radius:20px;
-    border-bottom-right-radius:20px;
+    border-bottom-left-radius:8px;
+    border-bottom-right-radius:8px;
 }
 
 .page{
