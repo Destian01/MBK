@@ -1,64 +1,33 @@
 function login(){
 
-    let username =
-    document.getElementById("username").value;
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
 
-    let password =
-    document.getElementById("password").value;
+    let pengguna =
+    JSON.parse(localStorage.getItem("pengguna")) || [];
 
-    let akun = [
+    let akun = pengguna.find(function(item){
 
-        {
-            username:"admin",
-            password:"12345",
-            nama:"Administrator"
-        },
-
-        {
-            username:"budi",
-            password:"budi123",
-            nama:"Budi Santoso"
-        },
-
-        {
-            username:"rina",
-            password:"rina123",
-            nama:"Rina Lestari"
-        }
-
-    ];
-
-    let berhasil = false;
-
-    akun.forEach(function(user){
-
-        if(
-            user.username==username &&
-            user.password==password
-        ){
-
-            localStorage.setItem(
-                "login","true"
-            );
-
-            localStorage.setItem(
-                "namaPetugas",
-                user.nama
-            );
-
-            window.location.href="index.html";
-
-            berhasil=true;
-
-        }
+        return item.username == username &&
+               item.password == password;
 
     });
 
-    if(!berhasil){
+    if(!akun){
 
-        document.getElementById("pesan").innerHTML =
-        "❌ Username atau Password salah";
+        alert("Username atau Password salah.");
+        return;
 
     }
+
+    localStorage.setItem("login","true");
+localStorage.setItem("namaPetugas",akun.nama);
+localStorage.setItem("role",akun.role);
+
+localStorage.setItem("login","true");
+localStorage.setItem("namaPetugas",akun.nama);
+localStorage.setItem("role",akun.role);
+
+location.href="index_v2.html";
 
 }
