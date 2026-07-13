@@ -113,7 +113,9 @@ function simpanNasabah(){
     let nama=document.getElementById("namaNasabah").value;
     let alamat=document.getElementById("alamatNasabah").value;
     let hp=document.getElementById("hpNasabah").value;
- let petugas = document.getElementById("petugas").value; 
+  let petugas = document.getElementById("petugas").value;
+let status =
+document.getElementById("statusNasabah").value;
 
     if(nama==""){
         alert("Nama nasabah harus diisi.");
@@ -125,6 +127,7 @@ function simpanNasabah(){
     alamat:alamat,
     hp:hp,
     petugas:petugas,
+    status:status,
     lat:lokasiDipilih.lat,
     lng:lokasiDipilih.lng
 };
@@ -151,6 +154,7 @@ function simpanNasabah(){
     document.getElementById("alamatNasabah").value="";
     document.getElementById("hpNasabah").value="";
 
+document.getElementById("petugas").value
     lokasiDipilih=null;
 
     alert("Nasabah berhasil disimpan.");
@@ -167,26 +171,52 @@ function tampilkanNasabah(){
     markerNasabah.forEach(function(item,index){
 
         daftar.innerHTML += `
+        
         <div class="itemNasabah">
 
-            <h3>👤 ${item.nama}</h3>
+    <div class="atasNasabah">
 
-            <p>📍 ${item.alamat}</p>
+        <h3>👤 ${item.nama}</h3>
 
-            <p>📞 ${item.hp}</p>
-<p>👮 Petugas : ${item.petugas}</p>
+        <button class="menuBtn"
+        onclick="toggleMenu(${index})">
+        ⋮
+        </button>
 
-            <div class="aksi">
+    </div>
+  
 
-<button onclick="lihatLokasi(${index})">📍</button>
+    <p>📍 ${item.alamat}</p>
 
-<button onclick="navigasiKeNasabah(${index})">🧭</button>
+    <p>📞 ${item.hp}</p>
 
-<button onclick="editNasabah(${index})">✏️</button>
+    <p>👮 ${item.petugas}</p>
 
-<button onclick="hapusNasabah(${index})">🗑️</button>
+<p>${statusBadge(item.status)}</p>
+
+    <div id="menu${index}" class="popupMenu">
+
+
+        <button onclick="lihatLokasi(${index})">
+            📍 Lihat Lokasi
+        </button>
+
+        <button onclick="navigasiKeNasabah(${index})">
+            🧭 Navigasi
+        </button>
+
+        <button onclick="editNasabah(${index})">
+            ✏️ Edit
+        </button>
+
+        <button onclick="hapusNasabah(${index})">
+            🗑️ Hapus
+        </button>
+
+    </div>
 
 </div>
+
         </div>
         <hr>
         `;
@@ -278,7 +308,9 @@ function navigasiKeNasabah(index){
 }
 
 function bukaMenu(menu){
-
+  
+tutupSemuaMenu();
+  
     console.log(menu);
 
     const pages = document.querySelectorAll(".page");
@@ -302,6 +334,48 @@ function updateLaporan(){
     let data = JSON.parse(localStorage.getItem("nasabah")) || [];
 
     document.getElementById("totalNasabah").innerText = data.length;
+
+}
+
+function toggleMenu(index){
+
+    let menu = document.getElementById("menu"+index);
+
+    let buka = menu.style.display == "block";
+
+    tutupSemuaMenu();
+
+    if(!buka){
+        menu.style.display = "block";
+    }
+
+}
+
+function tutupSemuaMenu(){
+
+    let menu = document.querySelectorAll(".popupMenu");
+
+    menu.forEach(function(item){
+        item.style.display = "none";
+    });
+
+}
+
+function statusBadge(status){
+
+    if(status=="Proses Pengajuan"){
+        return "🟡 Proses Pengajuan";
+    }
+
+    if(status=="Butuh Disurvei"){
+        return "🔵 Butuh Disurvei";
+    }
+
+    if(status=="Aktif Angsuran"){
+        return "🟢 Aktif Angsuran";
+    }
+
+    return status;
 
 }
 
