@@ -160,7 +160,6 @@ document.getElementById("statusNasabah").value;
     document.getElementById("alamatNasabah").value="";
     document.getElementById("hpNasabah").value="";
 
-document.getElementById("petugas").value
     lokasiDipilih=null;
 
     alert("Nasabah berhasil disimpan.");
