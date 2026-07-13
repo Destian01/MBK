@@ -1,3 +1,5 @@
+
+
 if(localStorage.getItem("login")!="true"){
 
     window.location.href="login.html";
@@ -106,8 +108,9 @@ data.forEach(function(item){
         `);
 
     markerNasabah.push(item);
-tampilkanNasabah();
+
 });
+tampilkanNasabah();
 
 function simpanNasabah(){
 
@@ -119,7 +122,21 @@ function simpanNasabah(){
     let nama=document.getElementById("namaNasabah").value;
     let alamat=document.getElementById("alamatNasabah").value;
     let hp=document.getElementById("hpNasabah").value;
-  let petugas = localStorage.getItem("namaPetugas");
+  
+let role = localStorage.getItem("role");
+
+if(role=="admin"){
+
+    petugas =
+    document.getElementById("petugasNasabah").value;
+
+}else{
+
+    petugas =
+    localStorage.getItem("namaPetugas");
+
+}
+  
 let status =
 document.getElementById("statusNasabah").value;
 
@@ -159,7 +176,6 @@ document.getElementById("statusNasabah").value;
     document.getElementById("namaNasabah").value="";
     document.getElementById("alamatNasabah").value="";
     document.getElementById("hpNasabah").value="";
-
     lokasiDipilih=null;
 
     alert("Nasabah berhasil disimpan.");
@@ -173,7 +189,14 @@ function tampilkanNasabah(){
     let daftar = document.getElementById("daftarNasabah");
     daftar.innerHTML = "";
 
-    markerNasabah.forEach(function(item,index){
+    let role = localStorage.getItem("role");
+let namaPetugas = localStorage.getItem("namaPetugas");
+
+markerNasabah.forEach(function(item,index){
+
+    if(role=="petugas" && item.petugas!=namaPetugas){
+        return;
+    }
 
         daftar.innerHTML += `
         
@@ -191,25 +214,30 @@ function tampilkanNasabah(){
     </div>
   
 
-    <p>📍 ${item.alamat}</p>
+    <p>Alamat: ${item.alamat}</p>
 
-    <p>📞 ${item.hp}</p>
+    <p>No.Hp: ${item.hp}</p>
 
-    <p>👮 ${item.petugas}</p>
+    <p>Petugas: ${item.petugas}</p>
 
 <p>${statusBadge(item.status)}</p>
 
     <div id="menu${index}" class="popupMenu">
 
+    <button onclick="lihatLokasi(${index})">
+        📍 Lihat Lokasi
+    </button>
 
-        <button onclick="lihatLokasi(${index})">
-            📍 Lihat Lokasi
-        </button>
+    <button onclick="navigasiKeNasabah(${index})">
+        🧭 Navigasi
+    </button>
 
-        <button onclick="navigasiKeNasabah(${index})">
-            🧭 Navigasi
-        </button>
-
+    ${
+        role!="supervisor" ?
+        `
+        <button onclick="catatanNasabah(${index})">
+    📝 Catatan
+</button>
         <button onclick="editNasabah(${index})">
             ✏️ Edit
         </button>
@@ -217,8 +245,12 @@ function tampilkanNasabah(){
         <button onclick="hapusNasabah(${index})">
             🗑️ Hapus
         </button>
+        `
+        :
+        ""
+    }
 
-    </div>
+</div>
 
 </div>
 
@@ -338,6 +370,15 @@ function updateLaporan(){
 
     let data = JSON.parse(localStorage.getItem("nasabah")) || [];
 
+    let role = localStorage.getItem("role");
+    let namaPetugas = localStorage.getItem("namaPetugas");
+
+    if(role == "petugas"){
+        data = data.filter(function(item){
+            return item.petugas == namaPetugas;
+        });
+    }
+
     document.getElementById("totalNasabah").innerText = data.length;
 
 }
@@ -390,6 +431,7 @@ function logout(){
 
         localStorage.removeItem("login");
         localStorage.removeItem("namaPetugas");
+      localStorage.removeItem("role");
 
         window.location.href="login.html";
 
@@ -405,6 +447,185 @@ function tampilkanPetugas(){
 
 }
 
+
+    let role = localStorage.getItem("role");
+
+let menuPengguna = document.getElementById("menuPengguna");
+let formNasabah = document.getElementById("formNasabah");
+
+if(role !== "admin" && menuPengguna){
+    menuPengguna.style.display = "none";
+}
+
+if(role === "supervisor" && formNasabah){
+    formNasabah.style.display = "none";
+}
+
+function tampilkanPetugas(){
+
+    let nama = localStorage.getItem("namaPetugas");
+    let role = localStorage.getItem("role");
+
+    let jabatan = "";
+
+    if(role=="admin"){
+        jabatan = "Admin";
+    }else if(role=="petugas"){
+        jabatan = "Petugas";
+    }else if(role=="supervisor"){
+        jabatan = "Supervisor";
+    }
+
+    document.getElementById("namaPetugas").innerHTML = nama;
+    document.getElementById("jabatanPetugas").innerHTML = jabatan;
+
+}
+
+function isiDaftarPetugas(){
+
+    let pengguna =
+    JSON.parse(localStorage.getItem("pengguna")) || [];
+
+    let select =
+    document.getElementById("petugasNasabah");
+
+    if(!select) return;
+
+    select.innerHTML = "";
+
+    pengguna.forEach(function(item){
+
+        if(item.role=="petugas"){
+
+            select.innerHTML +=
+            `<option value="${item.nama}">
+                ${item.nama}
+            </option>`;
+
+        }
+
+    });
+
+}
+
+function aturHakAkses(){
+
+    let role = localStorage.getItem("role");
+
+    if(role=="admin"){
+        document.getElementById("pilihPetugas").style.display="block";
+    }
+
+    if(role=="supervisor"){
+        document.getElementById("formNasabah").style.display="none";
+    }
+
+    if(role!="admin"){
+        document.getElementById("menuPengguna").style.display="none";
+    }
+
+}
+
+function catatanNasabah(index){
+
+  
+
+    let role = localStorage.getItem("role");
+
+    if(role=="supervisor"){
+        alert("Supervisor hanya dapat melihat catatan.");
+        return;
+    }
+
+    let data = markerNasabah[index];
+
+    let catatan = prompt(
+        "Masukkan catatan kunjungan untuk\n"+data.nama
+    );
+
+    if(catatan==null || catatan==""){
+        return;
+    }
+
+    if(!data.catatan){
+        data.catatan = [];
+    }
+
+    data.catatan.push({
+
+        tanggal:new Date().toLocaleString("id-ID"),
+
+        petugas:localStorage.getItem("namaPetugas"),
+
+        isi:catatan
+
+    });
+
+    markerNasabah[index]=data;
+
+    localStorage.setItem(
+        "nasabah",
+        JSON.stringify(markerNasabah)
+    );
+
+    alert("Catatan berhasil disimpan.");
+tampilkanLaporanCatatan();
+  
+}
+
+function tampilkanLaporanCatatan(){
+
+    let data = JSON.parse(localStorage.getItem("nasabah")) || [];
+
+    let role = localStorage.getItem("role");
+    let namaPetugas = localStorage.getItem("namaPetugas");
+
+    let html = "";
+
+    data.forEach(function(nasabah){
+
+        // Petugas hanya melihat nasabah miliknya
+        if(role=="petugas" && nasabah.petugas!=namaPetugas){
+            return;
+        }
+
+        if(nasabah.catatan){
+
+            nasabah.catatan.forEach(function(c){
+
+                html += `
+                <div class="itemNasabah">
+
+                    <b>Nasabah: ${nasabah.nama}</b><br>
+
+                    Tanggal: ${c.tanggal}<br>
+
+                    Petugas: ${c.petugas}<br>
+
+                    Catatan: ${c.isi}
+
+                </div>
+                <hr>
+                `;
+
+            });
+
+        }
+
+    });
+
+    if(html==""){
+        html = "Belum ada catatan.";
+    }
+
+    document.getElementById("laporanCatatan").innerHTML = html;
+
+}
+
+
 tampilkanNasabah();
 updateLaporan();
 tampilkanPetugas();
+isiDaftarPetugas();
+aturHakAkses();
+tampilkanLaporanCatatan();
