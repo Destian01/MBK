@@ -8,67 +8,132 @@
 
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+  
+  <body>
+    
+<header class="header">
+    <h2>📍Kunjungan Nasabah</h2>
+</header>
 
-    <header>
-        <h2>📍 Aplikasi Kunjungan Nasabah</h2>
-    </header>
+<!-- HOME -->
+<div id="homePage" class="page">
 
-    <div class="container">
+    <div class="card">
 
-        <div class="card">
-            <h3>Informasi Petugas</h3>
+        <h3>📍 Lokasi Petugas</h3>
 
-            <p><b>Nama Petugas</b></p>
-            <input type="text" id="petugas" placeholder="Masukkan nama petugas">
+        <button onclick="ambilLokasi()">
+            Ambil Lokasi Saya
+        </button>
 
-            <button onclick="ambilLokasi()">
-                Ambil Lokasi Saya
-            </button>
-          
-<button onclick="tambahNasabah()">
-    Tambah Nasabah
-</button>
-            <p id="status">Lokasi belum diambil.</p>
+        <p id="status">Lokasi belum diambil</p>
 
-            <p><b>Latitude</b></p>
-            <input type="text" id="lat" readonly>
-
-            <p><b>Longitude</b></p>
-            <input type="text" id="lng" readonly>
-          
-<p><b>Akurasi GPS</b></p>
-<input type="text" id="akurasi" readonly>
-        </div>
+        <h3>🗺️ Peta Lokasi</h3>
 
         <div id="map"></div>
-<div class="card">
-    <h2>📋 Daftar Nasabah</h2>
 
-    <div id="daftarNasabah"></div>
-
-</div>
-      <div class="card">
-    <h3>📍 Tambah Data Nasabah</h3>
-
-    <label>Nama Nasabah</label>
-    <input type="text" id="namaNasabah">
-
-    <label>Alamat</label>
-    <input type="text" id="alamatNasabah">
-
-    <label>No. HP</label>
-    <input type="text" id="hpNasabah">
-
-    <button onclick="simpanNasabah()">
-        💾 Simpan Nasabah
-    </button>
-      </div>
-      
     </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</div>
 
+<!-- NASABAH -->
+<div id="nasabahPage" class="page" style="display:none;">
+
+    <div class="card">
+
+        <h2>👥 Data Nasabah</h2>
+
+        <input
+        type="text"
+        id="namaNasabah"
+        placeholder="Nama">
+
+        <input
+        type="text"
+        id="alamatNasabah"
+        placeholder="Alamat">
+
+        <input
+        type="text"
+        id="hpNasabah"
+        placeholder="Nomor HP">
+      
+<button onclick="tambahNasabah()">
+    📍 Pilih Lokasi Nasabah
+</button>
+
+<button onclick="simpanNasabah()">
+    💾 Simpan Nasabah
+</button>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Daftar Nasabah</h2>
+
+        <div id="daftarNasabah"></div>
+
+    </div>
+
+</div>
+
+<!-- PETUGAS -->
+<div id="petugasPage" class="page" style="display:none;">
+
+    <div class="card">
+
+        <h2>👮 Data Petugas</h2>
+
+        <input id="petugas"
+        placeholder="Nama Petugas">
+
+        <input id="lat" readonly placeholder="Latitude">
+
+        <input id="lng" readonly placeholder="Longitude">
+
+        <input id="akurasi" readonly placeholder="Akurasi">
+
+    </div>
+
+</div>
+
+<!-- LAPORAN -->
+<div id="laporanPage" class="page" style="display:none;">
+
+    <div class="card">
+
+        <h2>📊 Laporan</h2>
+
+        <p>Total Nasabah :
+        <span id="totalNasabah">0</span></p>
+
+    </div>
+
+</div>
+
+<!-- MENU BAWAH -->
+<div class="bottom-nav">
+
+<button onclick="bukaMenu('home')">
+🏠<br>Home
+</button>
+
+<button onclick="bukaMenu('nasabah')">
+👥<br>Nasabah
+</button>
+
+<button onclick="bukaMenu('petugas')">
+👮<br>Petugas
+</button>
+
+<button onclick="bukaMenu('laporan')">
+📊<br>Laporan
+</button>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="script.js"></script>
 
 </body>
