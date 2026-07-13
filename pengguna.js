@@ -4,7 +4,7 @@ if(role != "admin"){
 
     alert("Akses ditolak.");
 
-    location.href = "index_v2.html";
+    location.href = "index.html";
 
 }
 
@@ -176,7 +176,7 @@ document.addEventListener("click",function(e){
 
 function kembaliHome(){
 
-    window.location.href = "index_v2.html";
+    window.location.href = "index.html";
 
 }
 
