@@ -39,7 +39,7 @@
 <!-- NASABAH -->
 <div id="nasabahPage" class="page" style="display:none;">
 
-    <div class="card">
+    <div class="card" id="formNasabah">
 
         <h2>👥 Data Nasabah</h2>
 
@@ -57,6 +57,15 @@
         type="text"
         id="hpNasabah"
         placeholder="Nomor HP">
+
+      <div id="pilihPetugas" style="display:none;">
+
+<label>Petugas</label>
+
+<select id="petugasNasabah">
+</select>
+
+</div>
       
       <label>Status</label>
 
@@ -101,10 +110,11 @@
 
     <div class="card">
 
-        <h2>👮 Data Petugas</h2>
+        <h2>Data Petugas</h2>
 
-        <p><b>👮 Nama Petugas</b></p>
-<p id="namaPetugas"></p>
+<h3>Nama: <span id="namaPetugas">Nama Petugas</span></h3>
+      
+      <h3>Jabatan: <span id="jabatanPetugas">Jabatan</span></h3>
 
         <input id="lat" readonly placeholder="Latitude">
 
@@ -120,7 +130,7 @@
 </div>
 
 <!-- LAPORAN -->
-<div id="laporanPage" class="page" style="display:none;">
+<<div id="laporanPage" class="page" style="display:none;">
 
     <div class="card">
 
@@ -128,6 +138,12 @@
 
         <p>Total Nasabah :
         <span id="totalNasabah">0</span></p>
+
+        <hr>
+
+        <h3>📝 Aktivitas Terbaru</h3>
+
+        <div id="laporanCatatan"></div>
 
     </div>
 
@@ -150,6 +166,11 @@
 
 <button onclick="bukaMenu('laporan')">
 📊<br>Laporan
+</button>
+
+<button id="menuPengguna"
+onclick="location.href='pengguna.html'">
+👤<br>User
 </button>
 
 </div>
