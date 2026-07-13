@@ -76,3 +76,33 @@ input{
     font-size:14px;
     border:none;
 }
+
+.itemNasabah{
+    background:#fff;
+    border-radius:15px;
+    padding:15px;
+    margin-bottom:15px;
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+}
+
+.aksi{
+    display:flex;
+    justify-content:space-between;
+    margin-top:15px;
+    gap:10px;
+}
+
+.aksi button{
+    flex:1;
+    height:45px;
+    border:none;
+    border-radius:12px;
+    font-size:20px;
+    background:#f1f5f9;
+    color:#1565C0;
+}
+
+.aksi button:hover{
+    background:#1565C0;
+    color:white;
+}
